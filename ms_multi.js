@@ -489,6 +489,33 @@ function drawSpellTriangle(x, y, r, w, omega, flag) {
 	ctx.restore();
 }
 
+function rec5Star(x, y, r, w, omega, t) {
+    if(t > 3) {
+        DebugPrint("test");
+        return;
+    }
+    DebugPrint(t);
+    drawPentagram(x, y, r, w, omega);
+    r = Math.sin(Math.PI/5) * r * 2; // 五角形1辺
+    r = r / (3 + Math.sqrt(5)) * 2; // 五芒星内五角形1辺
+    r = r / 2 / Math.sin(Math.PI / 5); // 五芒星内五角形の外接円半径
+    //r = r / 2 / Math.tan(Math.PI/5); // 五芒星内五角形の内接円半径
+    omega += 180 / 5; // 五芒星内に五芒星を交点に合わせて描画するための回転度計算
+    rec5Star(x, y, r, w, omega, ++t);
+}
+
+function rec6Star(x, y, r, w, omega, t) {
+    if(t > 8) {
+        DebugPrint("test");
+        return;
+    }
+    drawHexagram(x, y, r, w, omega);
+    r = r * Math.sqrt(3) / 3; // 六芒星内六角形の外接円半径
+    //r = r / 2; // 六芒星内六角形の内接円半径
+    omega += Math.PI / 6;
+    rec6Star(x, y, r, w, omega, ++t);
+}
+
 
 function DebugPrint(str) {
 	var out = document.getElementById("debug");
